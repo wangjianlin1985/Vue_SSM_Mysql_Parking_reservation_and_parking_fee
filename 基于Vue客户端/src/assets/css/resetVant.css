@@ -1,0 +1,16 @@
+.van-uploader__preview-image {
+  width: 98px!important;
+  height: 98px!important;
+}
+.van-uploader__preview:nth-child(3),
+.van-uploader__preview:nth-child(6),
+.van-uploader__preview:nth-child(9){
+  margin-right: 0!important;
+}
+.van-uploader__upload {
+  width: 98px!important;
+  height: 98px!important;
+  box-sizing: border-box;
+  /* border: 1px dashed #888; */
+  margin-right: 0!important;
+}

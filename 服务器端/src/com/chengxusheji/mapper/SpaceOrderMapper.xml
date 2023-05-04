@@ -1,0 +1,50 @@
+<!DOCTYPE mapper  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!--namespace命名空间，为了对sql语句进行隔离，方便管理，mapper开发dao方式，使用namespace有特殊作用  
+mapper代理开发时将namespace指定为mapper接口的全限定名  
+ -->
+<mapper namespace="com.chengxusheji.mapper.SpaceOrderMapper"> 
+<!--在mapper.xml文件中配置很多的sql语句，执行每个sql语句时，封装为MappedStatement对象 
+mapper.xml以statement为单位管理sql语句  
+ -->
+	<!-- 添加车位预约记录 -->
+	<insert id="addSpaceOrder" parameterType="spaceOrder">
+		insert into t_spaceOrder(spaceObj,userObj,startTime,endTime,orderMoney,shenHeState,orderMemo,orderTime) values 
+		(#{spaceObj.spaceId},#{userObj.user_name},#{startTime},#{endTime},#{orderMoney},#{shenHeState},#{orderMemo},#{orderTime})
+	</insert>
+
+	<!-- 按照查询条件分页查询车位预约记录 -->
+	<select id="querySpaceOrder" resultMap="spaceOrderMap" >
+		select t_spaceOrder.* from t_spaceOrder,t_spaceInfo,t_userInfo ${where} and t_spaceOrder.spaceObj = t_spaceInfo.spaceId and t_spaceOrder.userObj = t_userInfo.user_name limit #{startIndex},#{pageSize}
+	</select>
+	<resultMap id="spaceOrderMap" type="spaceOrder">
+        <id property="orderId" column="orderId" />
+        <association property="spaceObj" column="spaceObj" select="com.chengxusheji.mapper.SpaceInfoMapper.getSpaceInfo" />
+        <association property="userObj" column="userObj" select="com.chengxusheji.mapper.UserInfoMapper.getUserInfo" />
+    </resultMap>
+
+    <!-- 按照查询条件查询所有车位预约记录 -->
+	<select id="querySpaceOrderList" resultMap="spaceOrderMap" >
+		select t_spaceOrder.* from t_spaceOrder,t_spaceInfo,t_userInfo ${where} and t_spaceOrder.spaceObj = t_spaceInfo.spaceId and t_spaceOrder.userObj = t_userInfo.user_name
+	</select>
+
+    <!-- 按照查询条件的车位预约记录数 -->
+	<select id="querySpaceOrderCount" resultType="int">
+		select count(*) from t_spaceOrder,t_spaceInfo,t_userInfo ${where} and t_spaceOrder.spaceObj = t_spaceInfo.spaceId and t_spaceOrder.userObj = t_userInfo.user_name
+	</select>
+
+	<!-- 根据主键查询某个车位预约记录 -->
+	<select id="getSpaceOrder" parameterType="int" resultMap="spaceOrderMap">
+		select * from t_spaceOrder where t_spaceOrder.orderId = #{orderId}
+	</select>
+
+	<!-- 更新车位预约记录 -->
+	<update id="updateSpaceOrder" parameterType="spaceOrder">
+		update t_spaceOrder set spaceObj=#{spaceObj.spaceId},userObj=#{userObj.user_name},startTime=#{startTime},endTime=#{endTime},orderMoney=#{orderMoney},shenHeState=#{shenHeState},orderMemo=#{orderMemo},orderTime=#{orderTime} where orderId = #{orderId}
+	</update>
+
+	<!-- 删除车位预约记录 -->
+	<delete id="deleteSpaceOrder" parameterType="int">
+		delete from t_spaceOrder where orderId=#{orderId}
+	</delete>
+
+</mapper>

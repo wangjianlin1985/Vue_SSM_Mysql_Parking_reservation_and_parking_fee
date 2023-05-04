@@ -1,0 +1,48 @@
+<!DOCTYPE mapper  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!--namespace命名空间，为了对sql语句进行隔离，方便管理，mapper开发dao方式，使用namespace有特殊作用  
+mapper代理开发时将namespace指定为mapper接口的全限定名  
+ -->
+<mapper namespace="com.chengxusheji.mapper.CarModelMapper"> 
+<!--在mapper.xml文件中配置很多的sql语句，执行每个sql语句时，封装为MappedStatement对象 
+mapper.xml以statement为单位管理sql语句  
+ -->
+	<!-- 添加车型记录 -->
+	<insert id="addCarModel" parameterType="carModel">
+		insert into t_carModel(modelName) values 
+		(#{modelName})
+	</insert>
+
+	<!-- 按照查询条件分页查询车型记录 -->
+	<select id="queryCarModel" resultMap="carModelMap" >
+		select t_carModel.* from t_carModel ${where} limit #{startIndex},#{pageSize}
+	</select>
+	<resultMap id="carModelMap" type="carModel">
+        <id property="modelId" column="modelId" />
+    </resultMap>
+
+    <!-- 按照查询条件查询所有车型记录 -->
+	<select id="queryCarModelList" resultMap="carModelMap" >
+		select t_carModel.* from t_carModel ${where}
+	</select>
+
+    <!-- 按照查询条件的车型记录数 -->
+	<select id="queryCarModelCount" resultType="int">
+		select count(*) from t_carModel ${where}
+	</select>
+
+	<!-- 根据主键查询某个车型记录 -->
+	<select id="getCarModel" parameterType="int" resultMap="carModelMap">
+		select * from t_carModel where t_carModel.modelId = #{modelId}
+	</select>
+
+	<!-- 更新车型记录 -->
+	<update id="updateCarModel" parameterType="carModel">
+		update t_carModel set modelName=#{modelName} where modelId = #{modelId}
+	</update>
+
+	<!-- 删除车型记录 -->
+	<delete id="deleteCarModel" parameterType="int">
+		delete from t_carModel where modelId=#{modelId}
+	</delete>
+
+</mapper>

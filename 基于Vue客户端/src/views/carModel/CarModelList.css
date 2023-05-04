@@ -1,0 +1,73 @@
+.carModelList {
+    width: 100%;
+    height: auto;
+    flex-direction: column;
+    display: flex;
+    margin-top: 0px;
+}
+
+.carModelItem {
+    margin: 5px;
+    width: 98%;
+    height: auto;
+    border-top: 1px solid #ededed;
+    text-align: left;
+    display: flex;
+    flex-direction: column;
+    background-color: #fff;
+    border-radius: 5px;
+    position: relative;
+}
+
+.carModelItem .content_view {
+    display: flex;
+    flex-direction: row;
+}
+
+.carModelItem .carModelImg {
+    width: 30%;
+    text-align: right;
+    padding: 2px;
+    border-right: 1px solid #eee;
+}
+
+.carModelItem .carModelImg img {
+    width: 100%;
+    height: auto;
+}
+
+.carModelItem .carModelText {
+    width:70%;
+    display: flex;
+    flex-direction: column;
+    padding-left: 5px;
+}
+
+.carModelItem .carModelText div {
+    line-height: 25px;
+    height: auto;
+}
+
+.carModelItem .opt_view {
+    display:block;
+    width: 100%;
+    margin-top: 2px;
+    margin-bottom: 5px;
+    text-align: right;
+}
+
+.carModelQueryForm {
+    width: 100%;
+    height: auto;
+}
+
+.carModelQueryForm h3 {
+    text-align: center;
+    margin-top: 20px;
+    margin-bottom: 10px;
+}
+
+.carModelQueryForm .queryBtn {
+    text-align: right;
+    margin: 10px;
+}

@@ -1,0 +1,51 @@
+<!DOCTYPE mapper  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!--namespace命名空间，为了对sql语句进行隔离，方便管理，mapper开发dao方式，使用namespace有特殊作用  
+mapper代理开发时将namespace指定为mapper接口的全限定名  
+ -->
+<mapper namespace="com.chengxusheji.mapper.ParkMapper"> 
+<!--在mapper.xml文件中配置很多的sql语句，执行每个sql语句时，封装为MappedStatement对象 
+mapper.xml以statement为单位管理sql语句  
+ -->
+	<!-- 添加车辆停车记录 -->
+	<insert id="addPark" parameterType="park">
+		insert into t_park(carObj,userObj,spaceObj,startTime,endTime,price,timeSpan,parkMoney,parkMemo) values 
+		(#{carObj.carId},#{userObj.user_name},#{spaceObj.spaceId},#{startTime},#{endTime},#{price},#{timeSpan},#{parkMoney},#{parkMemo})
+	</insert>
+
+	<!-- 按照查询条件分页查询车辆停车记录 -->
+	<select id="queryPark" resultMap="parkMap" >
+		select t_park.* from t_park,t_car,t_spaceInfo,t_userInfo ${where} and t_park.carObj = t_car.carId and t_park.userObj = t_userInfo.user_name and t_park.spaceObj = t_spaceInfo.spaceId limit #{startIndex},#{pageSize}
+	</select>
+	<resultMap id="parkMap" type="park">
+        <id property="parkId" column="parkId" />
+        <association property="carObj" column="carObj" select="com.chengxusheji.mapper.CarMapper.getCar" />
+        <association property="userObj" column="userObj" select="com.chengxusheji.mapper.UserInfoMapper.getUserInfo" />
+        <association property="spaceObj" column="spaceObj" select="com.chengxusheji.mapper.SpaceInfoMapper.getSpaceInfo" />
+    </resultMap>
+
+    <!-- 按照查询条件查询所有车辆停车记录 -->
+	<select id="queryParkList" resultMap="parkMap" >
+		select t_park.* from t_park,t_car,t_spaceInfo,t_userInfo ${where} and t_park.carObj = t_car.carId and t_park.userObj = t_userInfo.user_name and t_park.spaceObj = t_spaceInfo.spaceId
+	</select>
+
+    <!-- 按照查询条件的车辆停车记录数 -->
+	<select id="queryParkCount" resultType="int">
+		select count(*) from t_park,t_car,t_spaceInfo,t_userInfo ${where} and t_park.carObj = t_car.carId and t_park.userObj = t_userInfo.user_name and t_park.spaceObj = t_spaceInfo.spaceId
+	</select>
+
+	<!-- 根据主键查询某个车辆停车记录 -->
+	<select id="getPark" parameterType="int" resultMap="parkMap">
+		select * from t_park where t_park.parkId = #{parkId}
+	</select>
+
+	<!-- 更新车辆停车记录 -->
+	<update id="updatePark" parameterType="park">
+		update t_park set carObj=#{carObj.carId},userObj=#{userObj.user_name},spaceObj=#{spaceObj.spaceId},startTime=#{startTime},endTime=#{endTime},price=#{price},timeSpan=#{timeSpan},parkMoney=#{parkMoney},parkMemo=#{parkMemo} where parkId = #{parkId}
+	</update>
+
+	<!-- 删除车辆停车记录 -->
+	<delete id="deletePark" parameterType="int">
+		delete from t_park where parkId=#{parkId}
+	</delete>
+
+</mapper>

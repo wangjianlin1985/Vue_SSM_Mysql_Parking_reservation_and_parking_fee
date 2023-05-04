@@ -1,0 +1,73 @@
+.noticeList {
+    width: 100%;
+    height: auto;
+    flex-direction: column;
+    display: flex;
+    margin-top: 0px;
+}
+
+.noticeItem {
+    margin: 5px;
+    width: 98%;
+    height: auto;
+    border-top: 1px solid #ededed;
+    text-align: left;
+    display: flex;
+    flex-direction: column;
+    background-color: #fff;
+    border-radius: 5px;
+    position: relative;
+}
+
+.noticeItem .content_view {
+    display: flex;
+    flex-direction: row;
+}
+
+.noticeItem .noticeImg {
+    width: 30%;
+    text-align: right;
+    padding: 2px;
+    border-right: 1px solid #eee;
+}
+
+.noticeItem .noticeImg img {
+    width: 100%;
+    height: auto;
+}
+
+.noticeItem .noticeText {
+    width:70%;
+    display: flex;
+    flex-direction: column;
+    padding-left: 5px;
+}
+
+.noticeItem .noticeText div {
+    line-height: 25px;
+    height: auto;
+}
+
+.noticeItem .opt_view {
+    display:block;
+    width: 100%;
+    margin-top: 2px;
+    margin-bottom: 5px;
+    text-align: right;
+}
+
+.noticeQueryForm {
+    width: 100%;
+    height: auto;
+}
+
+.noticeQueryForm h3 {
+    text-align: center;
+    margin-top: 20px;
+    margin-bottom: 10px;
+}
+
+.noticeQueryForm .queryBtn {
+    text-align: right;
+    margin: 10px;
+}

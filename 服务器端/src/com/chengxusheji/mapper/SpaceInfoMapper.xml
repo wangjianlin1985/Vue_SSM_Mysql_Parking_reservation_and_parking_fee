@@ -1,0 +1,49 @@
+<!DOCTYPE mapper  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!--namespace命名空间，为了对sql语句进行隔离，方便管理，mapper开发dao方式，使用namespace有特殊作用  
+mapper代理开发时将namespace指定为mapper接口的全限定名  
+ -->
+<mapper namespace="com.chengxusheji.mapper.SpaceInfoMapper"> 
+<!--在mapper.xml文件中配置很多的sql语句，执行每个sql语句时，封装为MappedStatement对象 
+mapper.xml以statement为单位管理sql语句  
+ -->
+	<!-- 添加停车位记录 -->
+	<insert id="addSpaceInfo" parameterType="spaceInfo">
+		insert into t_spaceInfo(regionObj,spaceNo,spacePhoto,spacePrice,spaceState,spaceDesc) values 
+		(#{regionObj.regionId},#{spaceNo},#{spacePhoto},#{spacePrice},#{spaceState},#{spaceDesc})
+	</insert>
+
+	<!-- 按照查询条件分页查询停车位记录 -->
+	<select id="querySpaceInfo" resultMap="spaceInfoMap" >
+		select t_spaceInfo.* from t_spaceInfo,t_region ${where} and t_spaceInfo.regionObj = t_region.regionId limit #{startIndex},#{pageSize}
+	</select>
+	<resultMap id="spaceInfoMap" type="spaceInfo">
+        <id property="spaceId" column="spaceId" />
+        <association property="regionObj" column="regionObj" select="com.chengxusheji.mapper.RegionMapper.getRegion" />
+    </resultMap>
+
+    <!-- 按照查询条件查询所有停车位记录 -->
+	<select id="querySpaceInfoList" resultMap="spaceInfoMap" >
+		select t_spaceInfo.* from t_spaceInfo,t_region ${where} and t_spaceInfo.regionObj = t_region.regionId
+	</select>
+
+    <!-- 按照查询条件的停车位记录数 -->
+	<select id="querySpaceInfoCount" resultType="int">
+		select count(*) from t_spaceInfo,t_region ${where} and t_spaceInfo.regionObj = t_region.regionId
+	</select>
+
+	<!-- 根据主键查询某个停车位记录 -->
+	<select id="getSpaceInfo" parameterType="int" resultMap="spaceInfoMap">
+		select * from t_spaceInfo where t_spaceInfo.spaceId = #{spaceId}
+	</select>
+
+	<!-- 更新停车位记录 -->
+	<update id="updateSpaceInfo" parameterType="spaceInfo">
+		update t_spaceInfo set regionObj=#{regionObj.regionId},spaceNo=#{spaceNo},spacePhoto=#{spacePhoto},spacePrice=#{spacePrice},spaceState=#{spaceState},spaceDesc=#{spaceDesc} where spaceId = #{spaceId}
+	</update>
+
+	<!-- 删除停车位记录 -->
+	<delete id="deleteSpaceInfo" parameterType="int">
+		delete from t_spaceInfo where spaceId=#{spaceId}
+	</delete>
+
+</mapper>

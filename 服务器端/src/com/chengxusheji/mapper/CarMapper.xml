@@ -1,0 +1,50 @@
+<!DOCTYPE mapper  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!--namespace命名空间，为了对sql语句进行隔离，方便管理，mapper开发dao方式，使用namespace有特殊作用  
+mapper代理开发时将namespace指定为mapper接口的全限定名  
+ -->
+<mapper namespace="com.chengxusheji.mapper.CarMapper"> 
+<!--在mapper.xml文件中配置很多的sql语句，执行每个sql语句时，封装为MappedStatement对象 
+mapper.xml以statement为单位管理sql语句  
+ -->
+	<!-- 添加车辆记录 -->
+	<insert id="addCar" parameterType="car">
+		insert into t_car(carNo,carModelObj,pinpai,carPhoto,youxing,haoyouliang,chexianriqi,zonglicheng,carDesc,userObj,addTime) values 
+		(#{carNo},#{carModelObj.modelId},#{pinpai},#{carPhoto},#{youxing},#{haoyouliang},#{chexianriqi},#{zonglicheng},#{carDesc},#{userObj.user_name},#{addTime})
+	</insert>
+
+	<!-- 按照查询条件分页查询车辆记录 -->
+	<select id="queryCar" resultMap="carMap" >
+		select t_car.* from t_car,t_carModel,t_userInfo ${where} and t_car.carModelObj = t_carModel.modelId and t_car.userObj = t_userInfo.user_name limit #{startIndex},#{pageSize}
+	</select>
+	<resultMap id="carMap" type="car">
+        <id property="carId" column="carId" />
+        <association property="carModelObj" column="carModelObj" select="com.chengxusheji.mapper.CarModelMapper.getCarModel" />
+        <association property="userObj" column="userObj" select="com.chengxusheji.mapper.UserInfoMapper.getUserInfo" />
+    </resultMap>
+
+    <!-- 按照查询条件查询所有车辆记录 -->
+	<select id="queryCarList" resultMap="carMap" >
+		select t_car.* from t_car,t_carModel,t_userInfo ${where} and t_car.carModelObj = t_carModel.modelId and t_car.userObj = t_userInfo.user_name
+	</select>
+
+    <!-- 按照查询条件的车辆记录数 -->
+	<select id="queryCarCount" resultType="int">
+		select count(*) from t_car,t_carModel,t_userInfo ${where} and t_car.carModelObj = t_carModel.modelId and t_car.userObj = t_userInfo.user_name
+	</select>
+
+	<!-- 根据主键查询某个车辆记录 -->
+	<select id="getCar" parameterType="int" resultMap="carMap">
+		select * from t_car where t_car.carId = #{carId}
+	</select>
+
+	<!-- 更新车辆记录 -->
+	<update id="updateCar" parameterType="car">
+		update t_car set carNo=#{carNo},carModelObj=#{carModelObj.modelId},pinpai=#{pinpai},carPhoto=#{carPhoto},youxing=#{youxing},haoyouliang=#{haoyouliang},chexianriqi=#{chexianriqi},zonglicheng=#{zonglicheng},carDesc=#{carDesc},userObj=#{userObj.user_name},addTime=#{addTime} where carId = #{carId}
+	</update>
+
+	<!-- 删除车辆记录 -->
+	<delete id="deleteCar" parameterType="int">
+		delete from t_car where carId=#{carId}
+	</delete>
+
+</mapper>

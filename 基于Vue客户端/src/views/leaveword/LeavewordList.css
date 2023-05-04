@@ -1,0 +1,73 @@
+.leavewordList {
+    width: 100%;
+    height: auto;
+    flex-direction: column;
+    display: flex;
+    margin-top: 0px;
+}
+
+.leavewordItem {
+    margin: 5px;
+    width: 98%;
+    height: auto;
+    border-top: 1px solid #ededed;
+    text-align: left;
+    display: flex;
+    flex-direction: column;
+    background-color: #fff;
+    border-radius: 5px;
+    position: relative;
+}
+
+.leavewordItem .content_view {
+    display: flex;
+    flex-direction: row;
+}
+
+.leavewordItem .leavewordImg {
+    width: 30%;
+    text-align: right;
+    padding: 2px;
+    border-right: 1px solid #eee;
+}
+
+.leavewordItem .leavewordImg img {
+    width: 100%;
+    height: auto;
+}
+
+.leavewordItem .leavewordText {
+    width:70%;
+    display: flex;
+    flex-direction: column;
+    padding-left: 5px;
+}
+
+.leavewordItem .leavewordText div {
+    line-height: 25px;
+    height: auto;
+}
+
+.leavewordItem .opt_view {
+    display:block;
+    width: 100%;
+    margin-top: 2px;
+    margin-bottom: 5px;
+    text-align: right;
+}
+
+.leavewordQueryForm {
+    width: 100%;
+    height: auto;
+}
+
+.leavewordQueryForm h3 {
+    text-align: center;
+    margin-top: 20px;
+    margin-bottom: 10px;
+}
+
+.leavewordQueryForm .queryBtn {
+    text-align: right;
+    margin: 10px;
+}
